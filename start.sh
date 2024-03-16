@@ -2,7 +2,8 @@
 rm -rf /home/container/tmp/*
 
 echo "⟳ Starting PHP..."
-/usr/sbin/php7.4-fpm --fpm-config /home/container/php/php-fpm.conf --daemonize
+php -v
+/usr/sbin/php-fpm7 --fpm-config /home/container/php/php-fpm.conf --daemonize
 
 echo "⟳ Starting Nginx..."
 echo "✓ Successfully started"
