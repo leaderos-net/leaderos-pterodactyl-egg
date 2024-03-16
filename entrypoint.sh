@@ -1,5 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 cd /home/container
+
+# Output Current PHP Version
+php -v
 
 # Replace Startup Variables
 MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`

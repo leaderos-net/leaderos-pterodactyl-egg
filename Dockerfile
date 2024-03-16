@@ -1,34 +1,27 @@
-FROM php:7.4-fpm
+FROM php:7.4-fpm-alpine
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache --update \
     curl \
-    zip \
+    ca-certificates \
+    openssl \
+    git \
+    tar \
+    bash \
+    sqlite \
+    fontconfig \
+    oniguruma-dev \
     libzip-dev \
-    libcurl4 \
-    libcurl4-openssl-dev \
-    libonig-dev \
-    default-mysql-client \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libxml2-dev
+    curl-dev
 
-# Install nginx
-RUN apt-get install -y nginx
+RUN docker-php-ext-install pdo pdo_mysql mbstring json zip curl fileinfo
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install extensions
-RUN docker-php-ext-install pdo pdo_mysql mbstring zip curl json fileinfo
+RUN adduser --disabled-password --home /home/container container
 
 USER container
-ENV  USER container
-ENV HOME /home/container
+ENV  USER=container HOME=/home/container
 
 WORKDIR /home/container
+
 COPY ./entrypoint.sh /entrypoint.sh
 
-
-CMD ["/bin/sh", "/entrypoint.sh"]
+CMD ["/bin/bash", "/entrypoint.sh"]
