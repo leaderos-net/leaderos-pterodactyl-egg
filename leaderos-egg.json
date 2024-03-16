@@ -1,0 +1,31 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-03-16T23:05:44+02:00",
+    "name": "LeaderOS",
+    "author": "contact@leaderos.net",
+    "description": "Host LeaderOS software on Pterodactyl Panel.",
+    "features": null,
+    "docker_images": {
+        "LeaderOS PHP7.4": "ghcr.io\/leaderos-net\/leaderos-pterodactyl:7.4"
+    },
+    "file_denylist": [],
+    "startup": ".\/start.sh",
+    "config": {
+        "files": "{\r\n    \"nginx\/conf.d\/default.conf\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"    listen \": \"    listen {{server.build.default.port}};\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \"\",\r\n    \"userInteraction\": []\r\n}",
+        "logs": "{\r\n    \"custom\": false,\r\n    \"location\": \"logs\/latest.log\"\r\n}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/ash\r\n\r\ncd \/mnt\/server\r\n\r\napk --update add git\r\n\r\ngit clone https:\/\/github.com\/leaderos-net\/leaderos-pterodactyl-egg .\/temp\r\n\r\ncp -r .\/temp\/nginx \/mnt\/server\/\r\ncp -r .\/temp\/php \/mnt\/server\/\r\ncp -r .\/temp\/webroot \/mnt\/server\/\r\ncp .\/temp\/start.sh \/mnt\/server\/\r\nchmod +x \/mnt\/server\/start.sh\r\nrm -rf .\/temp\r\n\r\nif [ \"${WORDPRESS}\" == \"true\" ] || [ \"${WORDPRESS}\" == \"1\" ]; then\r\n    echo -e \"Installing wordpress\"\r\n    cd \/mnt\/server\/webroot\r\n    wget http:\/\/wordpress.org\/latest.tar.gz\r\n    tar xzf latest.tar.gz\r\n   mv wordpress\/* .\r\n   rm -rf wordpress latest.tar.gz\r\n   echo -e \"Install complete go to http:\/\/ip:port\/wp-admin \"\r\n   exit 0\r\nfi",
+            "container": "alpine:latest",
+            "entrypoint": "ash"
+        }
+    },
+    "variables": []
+}
