@@ -1,6 +1,4 @@
-#!/bin/bash
-sleep 1
-
+#!/bin/sh
 cd /home/container
 
 # Replace Startup Variables
