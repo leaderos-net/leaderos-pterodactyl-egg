@@ -25,6 +25,8 @@ RUN apk add --no-cache --update \
     php7-pdo_mysql \
     php7-session \
     php7-fileinfo \
+    php7-ctype \
+    php7-tokenizer \
     nginx
 
 RUN adduser --disabled-password --home /home/container container
