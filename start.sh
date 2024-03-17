@@ -1,6 +1,8 @@
 #!/bin/bash
 rm -rf /home/container/tmp/*
 
+touch /home/container/tmp/php-fpm.sock
+
 echo "⟳ Starting PHP..."
 php -v
 /usr/sbin/php-fpm7 -c /home/container/php-fpm/php.ini --fpm-config /home/container/php-fpm/php-fpm.conf --daemonize
