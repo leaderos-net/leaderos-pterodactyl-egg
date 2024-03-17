@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -rf /home/container/tmp/*
 
-touch /home/container/tmp/php-fpm.sock
+mkdir -p /home/container/tmp/
 
 echo "⟳ Starting PHP..."
 php -v
