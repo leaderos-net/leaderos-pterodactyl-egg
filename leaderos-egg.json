@@ -4,28 +4,39 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-16T23:05:44+02:00",
+    "exported_at": "2024-03-17T18:04:09+01:00",
     "name": "LeaderOS",
     "author": "contact@leaderos.net",
     "description": "Host LeaderOS software on Pterodactyl Panel.",
     "features": null,
     "docker_images": {
-        "LeaderOS Nginx + PHP7.4": "leaderos/leaderos-pterodactyl:latest"
+        "LeaderOS Nginx + PHP 7.4": "leaderos\/leaderos-pterodactyl:latest"
     },
     "file_denylist": [],
     "startup": ".\/start.sh",
     "config": {
-        "files": "{\r\n    \"nginx\/conf.d\/default.conf\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"    listen \": \"    listen {{server.build.default.port}};\"\r\n        }\r\n    }\r\n}",
+        "files": "{\r\n    \"nginx\/conf.d\/default.conf\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"    listen \": \"    listen {{server.build.default.port}};\",\r\n            \"    server_name \": \"    server_name {{server.build.env.DOMAIN}} www.{{server.build.env.DOMAIN}};\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"\",\r\n    \"userInteraction\": []\r\n}",
         "logs": "{\r\n    \"custom\": false,\r\n    \"location\": \"logs\/latest.log\"\r\n}",
         "stop": "^C"
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/ash\r\n\r\ncd \/mnt\/server\r\n\r\napk --update add git\r\n\r\ngit clone https:\/\/github.com\/leaderos-net\/leaderos-pterodactyl-egg .\/temp\r\n\r\ncp -r .\/temp\/nginx \/mnt\/server\/\r\ncp -r .\/temp\/php \/mnt\/server\/\r\ncp -r .\/temp\/webroot \/mnt\/server\/\r\ncp .\/temp\/start.sh \/mnt\/server\/\r\nchmod +x \/mnt\/server\/start.sh\r\nrm -rf .\/temp\r\n\r\nif [ \"${WORDPRESS}\" == \"true\" ] || [ \"${WORDPRESS}\" == \"1\" ]; then\r\n    echo -e \"Installing wordpress\"\r\n    cd \/mnt\/server\/webroot\r\n    wget http:\/\/wordpress.org\/latest.tar.gz\r\n    tar xzf latest.tar.gz\r\n   mv wordpress\/* .\r\n   rm -rf wordpress latest.tar.gz\r\n   echo -e \"Install complete go to http:\/\/ip:port\/wp-admin \"\r\n   exit 0\r\nfi",
+            "script": "#!\/bin\/ash\r\n\r\ncd \/mnt\/server\r\n\r\napk --update add git unzip\r\n\r\ngit clone https:\/\/github.com\/leaderos-net\/leaderos-pterodactyl-egg .\/temp\r\n\r\ncp -r .\/temp\/nginx \/mnt\/server\/\r\ncp -r .\/temp\/php-fpm \/mnt\/server\/\r\ncp -r .\/temp\/logs \/mnt\/server\/\r\ncp -r .\/temp\/webroot \/mnt\/server\/\r\ncp .\/temp\/start.sh \/mnt\/server\/\r\nchmod +x \/mnt\/server\/start.sh\r\nrm -rf .\/temp\r\n\r\necho -e \"Downloading LeaderOS...\"\r\ncd \/mnt\/server\/webroot\r\nwget https:\/\/installer.leaderos.net\/latest.zip\r\nunzip latest.zip\r\nrm -rf latest.zip\r\necho -e \"Download complete!\"\r\necho -e \"Go to http:\/\/ip:port\/install\"\r\nexit 0",
             "container": "alpine:latest",
             "entrypoint": "ash"
         }
     },
-    "variables": []
+    "variables": [
+        {
+            "name": "Domain",
+            "description": "Enter your domain: (Example: yourdomain.com)",
+            "env_variable": "DOMAIN",
+            "default_value": "yourdomain.com",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:255",
+            "field_type": "text"
+        }
+    ]
 }
