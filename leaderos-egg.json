@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-17T18:04:09+01:00",
+    "exported_at": "2024-03-17T21:08:16+01:00",
     "name": "LeaderOS",
     "author": "contact@leaderos.net",
     "description": "Host LeaderOS software on Pterodactyl Panel.",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/ash\r\n\r\ncd \/mnt\/server\r\n\r\napk --update add git unzip\r\n\r\ngit clone https:\/\/github.com\/leaderos-net\/leaderos-pterodactyl-egg .\/temp\r\n\r\ncp -r .\/temp\/nginx \/mnt\/server\/\r\ncp -r .\/temp\/php-fpm \/mnt\/server\/\r\ncp -r .\/temp\/logs \/mnt\/server\/\r\ncp -r .\/temp\/webroot \/mnt\/server\/\r\ncp .\/temp\/start.sh \/mnt\/server\/\r\nchmod +x \/mnt\/server\/start.sh\r\nrm -rf .\/temp\r\n\r\necho -e \"Downloading LeaderOS...\"\r\ncd \/mnt\/server\/webroot\r\nwget https:\/\/installer.leaderos.net\/latest.zip\r\nunzip latest.zip\r\nrm -rf latest.zip\r\necho -e \"Download complete!\"\r\necho -e \"Go to http:\/\/ip:port\/install\"\r\nexit 0",
+            "script": "#!\/bin\/ash\r\n\r\ncd \/mnt\/server\r\n\r\napk --update add git unzip\r\n\r\ngit clone https:\/\/github.com\/leaderos-net\/leaderos-pterodactyl-egg .\/temp\r\n\r\ncp -r .\/temp\/nginx \/mnt\/server\/\r\ncp -r .\/temp\/php-fpm \/mnt\/server\/\r\ncp -r .\/temp\/logs \/mnt\/server\/\r\ncp -r .\/temp\/webroot \/mnt\/server\/\r\ncp .\/temp\/start.sh \/mnt\/server\/\r\nchmod +x \/mnt\/server\/start.sh\r\nrm -rf .\/temp\r\n\r\necho -e \"Downloading LeaderOS...\"\r\ncd \/mnt\/server\/webroot\r\nwget https:\/\/installer.leaderos.net\/latest.zip\r\nunzip latest.zip\r\nrm -rf latest.zip\r\nrm install.php\r\nrm index.php\r\necho -e \"Download complete!\"\r\necho -e \"Go to http:\/\/ip:port\/install\"\r\nexit 0",
             "container": "alpine:latest",
             "entrypoint": "ash"
         }
