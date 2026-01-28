@@ -12,8 +12,10 @@ RUN apk add --no-cache --update \
     oniguruma-dev \
     libzip-dev \
     curl-dev \
+    imagemagick \
     php7 \
     php7-fpm \
+    php7-pecl-imagick \
     php7-mysqli \
     php7-json \
     php7-mbstring \
