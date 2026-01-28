@@ -28,6 +28,7 @@ RUN apk add --no-cache --update \
     php7-ctype \
     php7-tokenizer \
     php7-gd \
+    php7-exif \
     nginx
 
 RUN adduser --disabled-password --home /home/container container
