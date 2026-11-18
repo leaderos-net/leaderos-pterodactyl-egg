@@ -10,7 +10,7 @@
     "description": "Host LeaderOS software on Pterodactyl Panel.",
     "features": null,
     "docker_images": {
-        "LeaderOS Nginx + PHP 7.4": "leaderos\/leaderos-pterodactyl:latest"
+        "LeaderOS Nginx + PHP 8.5": "leaderos\/leaderos-pterodactyl:php8.5"
     },
     "file_denylist": [],
     "startup": ".\/start.sh",
